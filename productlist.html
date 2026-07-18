@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C'monThread | Products</title>
+
+    <link rel="stylesheet" href="css/productStyles.css">
+</head>
+<body>
+
+<header>
+
+    <nav>
+
+        <a href="index.html">C'monThread</a>
+
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li>
+                <a href="cart.html">
+                    Cart (<span id="cartCount">0</span>)
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+
+</header>
+
+<main>
+
+    <section>
+
+        <h1>Our Collection</h1>
+
+        <p>
+            Browse our latest clothing collection.
+        </p>
+
+    </section>
+
+    <section>
+
+        <input
+            type="text"
+            id="productSearch"
+            placeholder="Search products..."
+        >
+
+        <div id="filterButtons">
+
+            <button class="filter-btn active" data-filter="all">
+                All
+            </button>
+
+            <button class="filter-btn" data-filter="tops">
+                Tops
+            </button>
+
+            <button class="filter-btn" data-filter="outerwear">
+                Outerwear
+            </button>
+
+            <button class="filter-btn" data-filter="dresses">
+                Dresses
+            </button>
+
+            <button class="filter-btn" data-filter="bottoms">
+                Bottoms
+            </button>
+
+        </div>
+
+    </section>
+
+    <section>
+
+        <div id="productGrid">
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+
+    <p>
+        &copy; 2026 C'monThread. All rights reserved.
+    </p>
+
+</footer>
+
+<script src="js/productslist.js"></script>
+
+</body>
+</html>
