@@ -1,167 +1,61 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const products = [
-    {
-      id: "classic-white-shirt",
-      name: "Classic White Shirt",
-      category: "tops",
-      price: 499,
-      image: "images/product-1.jpg",
-      description: "A clean and versatile white shirt made for casual and formal wear."
-    },
-    {
-      id: "oversized-denim-jacket",
-      name: "Oversized Denim Jacket",
-      category: "outerwear",
-      price: 599,
-      image: "images/product-2.jpg",
-      description: "A relaxed denim jacket with a modern oversized fit."
-    },
-    {
-      id: "minimal-black-dress",
-      name: "Minimal Black Dress",
-      category: "dresses",
-      price: 549,
-      image: "images/product-3.jpg",
-      description: "A simple elegant black dress designed for a clean, timeless look."
-    },
-    {
-      id: "relaxed-fit-trousers",
-      name: "Relaxed Fit Trousers",
-      category: "bottoms",
-      price: 499,
-      image: "images/product-4.jpg",
-      description: "Comfortable trousers with a loose fit for everyday styling."
-    }
-  ];
-
-  let cart = JSON.parse(localStorage.getItem("siteCart")) || [];
-
   const cartCount = document.getElementById("cartCount");
-  const productGrid = document.getElementById("productGrid");
   const productSearch = document.getElementById("productSearch");
   const filterButtons = document.querySelectorAll(".filter-btn");
+  const productItems = document.querySelectorAll(".product-item");
 
-  const detailImage = document.getElementById("detailImage");
-  const detailCategory = document.getElementById("detailCategory");
-  const detailName = document.getElementById("detailName");
-  const detailDescription = document.getElementById("detailDescription");
-  const detailPrice = document.getElementById("detailPrice");
-  const detailAddToCart = document.getElementById("detailAddToCart");
+  function getCart() {
+    try {
+      return JSON.parse(localStorage.getItem("siteCart")) || [];
+    } catch {
+      return [];
+    }
+  }
 
-  function saveCart() {
+  function saveCart(cart) {
     localStorage.setItem("siteCart", JSON.stringify(cart));
   }
 
-  function getCartCount() {
-    return cart.reduce((sum, item) => sum + item.quantity, 0);
-  }
-
   function updateCartBadge() {
+    if (window.Site && typeof window.Site.updateCartBadge === "function") {
+      window.Site.updateCartBadge();
+      return;
+    }
+
+    const count = getCart().reduce((sum, item) => sum + Number(item.quantity || 1), 0);
     if (cartCount) {
-      cartCount.textContent = getCartCount();
+      cartCount.textContent = count;
     }
   }
 
-  function addToCart(product) {
-    const existing = cart.find(item => item.id === product.id);
-
-    if (existing) {
-      existing.quantity += 1;
-    } else {
-      cart.push({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        image: product.image,
-        quantity: 1
-      });
-    }
-
-    saveCart();
-    updateCartBadge();
-  }
-
-  function createProductCard(product) {
-    return `
-      <div class="col-sm-6 col-lg-3 product-item" data-name="${product.name.toLowerCase()}" data-category="${product.category}">
-        <div class="card product-card h-100">
-          <img src="${product.image}" class="card-img-top" alt="${product.name}">
-          <div class="card-body d-flex flex-column">
-            <p class="text-uppercase text-muted small mb-1">${product.category}</p>
-            <h3 class="h6">${product.name}</h3>
-            <p class="fw-bold mb-3">₱${product.price.toLocaleString()}</p>
-
-            <div class="mt-auto d-grid gap-2">
-              <a href="product-details.html?item=${product.id}" class="btn btn-outline-dark">View Details</a>
-              <button class="btn btn-dark add-to-cart-btn" data-id="${product.id}">Add to Cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  function renderProducts(list) {
-    if (!productGrid) return;
-    productGrid.innerHTML = list.map(createProductCard).join("");
-  }
-
-  function getFilteredProducts() {
-    const searchText = productSearch ? productSearch.value.toLowerCase().trim() : "";
+  function applyFilters() {
+    const searchText = productSearch.value.toLowerCase().trim();
     const activeFilter = document.querySelector(".filter-btn.active")?.dataset.filter || "all";
 
-    return products.filter(product => {
+    productItems.forEach(item => {
+      const name = item.dataset.name || "";
+      const category = item.dataset.category || "";
+
       const matchesSearch =
-        product.name.toLowerCase().includes(searchText) ||
-        product.category.toLowerCase().includes(searchText);
+        name.includes(searchText) ||
+        category.includes(searchText);
 
-      const matchesFilter = activeFilter === "all" || product.category === activeFilter;
+      const matchesFilter =
+        activeFilter === "all" || category === activeFilter;
 
-      return matchesSearch && matchesFilter;
+      item.style.display = matchesSearch && matchesFilter ? "" : "none";
     });
-  }
-
-  function loadProductDetails() {
-    if (!detailImage || !detailName || !detailDescription || !detailPrice || !detailCategory) return;
-
-    const params = new URLSearchParams(window.location.search);
-    const itemId = params.get("item");
-
-    const product = products.find(p => p.id === itemId) || products[0];
-
-    detailImage.src = product.image;
-    detailImage.alt = product.name;
-    detailCategory.textContent = product.category;
-    detailName.textContent = product.name;
-    detailDescription.textContent = product.description;
-    detailPrice.textContent = `₱${product.price.toLocaleString()}`;
-
-    if (detailAddToCart) {
-      detailAddToCart.addEventListener("click", () => {
-        addToCart(product);
-        detailAddToCart.textContent = "Added!";
-        setTimeout(() => {
-          detailAddToCart.textContent = "Add to Cart";
-        }, 1000);
-      });
-    }
-  }
-
-  if (productGrid) {
-    renderProducts(products);
   }
 
   if (productSearch) {
-    productSearch.addEventListener("input", () => {
-      renderProducts(getFilteredProducts());
-    });
+    productSearch.addEventListener("input", applyFilters);
   }
 
   filterButtons.forEach(button => {
     button.addEventListener("click", () => {
       filterButtons.forEach(btn => btn.classList.remove("active"));
       button.classList.add("active");
-      renderProducts(getFilteredProducts());
+      applyFilters();
     });
   });
 
@@ -169,18 +63,47 @@ document.addEventListener("DOMContentLoaded", () => {
     const button = event.target.closest(".add-to-cart-btn");
     if (!button) return;
 
-    const productId = button.dataset.id;
-    const product = products.find(p => p.id === productId);
+    const card = button.closest(".product-item");
+    if (!card) return;
 
-    if (product) {
-      addToCart(product);
-      button.textContent = "Added!";
-      setTimeout(() => {
-        button.textContent = "Add to Cart";
-      }, 1000);
+    const product = {
+      id: card.dataset.productId,
+      name: card.dataset.productName,
+      price: Number(card.dataset.productPrice),
+      image: card.dataset.productImage
+    };
+
+    if (window.Site && typeof window.Site.addToCart === "function") {
+      window.Site.addToCart(product, 1, "Default");
+    } else {
+      const cart = getCart();
+      const existing = cart.find(item => item.id === product.id && item.size === "Default");
+
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          image: product.image,
+          size: "Default",
+          quantity: 1
+        });
+      }
+
+      saveCart(cart);
     }
+
+    updateCartBadge();
+
+    const originalText = button.textContent;
+    button.textContent = "Added!";
+    setTimeout(() => {
+      button.textContent = originalText;
+    }, 1000);
   });
 
+  applyFilters();
   updateCartBadge();
-  loadProductDetails();
 });
