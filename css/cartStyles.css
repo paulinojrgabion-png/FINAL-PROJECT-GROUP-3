@@ -63,6 +63,18 @@ body{
     color:#fdacab !important;
 }
 
+.navbar-brand--logo {
+  display: inline-flex;
+  align-items: center;
+}
+
+.brand-logo {
+  height: 70px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
 /* ---------- MAIN ---------- */
 
 main{
