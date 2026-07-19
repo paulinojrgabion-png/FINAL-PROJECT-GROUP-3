@@ -1,75 +1,237 @@
-body {
-    color: black;
-    margin: 0;
-    font-family: Inter, system-ui,"Segoe UI", sans-serif;
-    background: linear-gradient(to bottom, #836193, #c66c92, #fdacab);
-    background-repeat: no-repeat;
-    display: flex;
-    flex-direction: column;
+/* ==========================================
+   C'MONTHREAD
+   CART PAGE STYLE
+   Dark → Light Mauve Theme
+========================================== */
+
+/* ---------- RESET ---------- */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-* {
-    box-sizing: border-box;
+html{
+    scroll-behavior:smooth;
 }
 
-html, body {
-    scroll-behavior: smooth;
-    height: 100%
+body{
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
+    font-family:"Helvetica Neue", Arial, sans-serif;
+    color:#fff;
+    line-height:1.7;
+
+    background:linear-gradient(
+        180deg,
+        #2d1f3d 0%,
+        #4b3a63 20%,
+        #6a5078 40%,
+        #8d6592 60%,
+        #b57a98 80%,
+        #fdacab 100%
+    );
 }
 
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-}
+/* ---------- HEADER ---------- */
 
-main {
-    flex: 1;
+.site-header{
+    background:#2d1f3d;
+    box-shadow:0 5px 20px rgba(0,0,0,.35);
 }
 
 .site-header .navbar{
-    padding: 1rem 0;
+    padding:18px 0;
 }
 
-.site-header .navbar-brand {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #292929 !important;
+.site-header .navbar-brand{
+    color:#fdacab !important;
+    font-size:1.8rem;
+    font-weight:700;
 }
 
-.site-header .nav-link {
-    color: #000 !important;
-    transition: color 0.3s ease;
+.site-header .nav-link{
+    color:#d4c3d8 !important;
+    margin-left:18px;
+    transition:.3s;
 }
 
-main h1 {
-    color: #040c30 !important;
+.site-header .nav-link:hover,
+.site-header .nav-link.active{
+    color:#fdacab !important;
 }
 
-.card {
-    border: 1px solid #040c30 !important;
+/* ---------- MAIN ---------- */
+
+main{
+    flex:1;
+    padding:80px 0;
 }
 
-.card:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+main h1{
+    color:white;
+    font-size:2.6rem;
+    font-weight:700;
+    margin-bottom:35px !important;
 }
 
-#checkoutBtn, .btn-dark{
-    border: none;
+/* ---------- CARDS ---------- */
+
+.card{
+    background:white;
+    border:none;
+    border-radius:22px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,.18);
+    transition:.35s;
 }
 
-#checkoutBtn:hover, .btn-dark:hover {
-    transform: translateY(-2px);
+.card:hover{
+    transform:translateY(-8px);
 }
 
-.btn-outline-dark {
-    border: 1px solid #040c30 !important;
+.card-body{
+    padding:28px;
+    color:#4b3a63;
 }
 
-.btn-outline-dark:hover {
-    transform: translateY(-2px);
+.card h2,
+.card strong{
+    color:#2d1f3d;
 }
 
-footer {
-    background: white;
+/* ---------- CART ITEMS ---------- */
+
+#cartItems{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.cart-item{
+    background:#faf7fb;
+    border:1px solid #eadce8;
+    border-radius:16px;
+    padding:18px;
+    transition:.3s;
+}
+
+.cart-item:hover{
+    background:white;
+    transform:translateX(5px);
+}
+
+/* ---------- ORDER SUMMARY ---------- */
+
+#cartTotal{
+    color:#8d6592;
+    font-size:1.5rem;
+    font-weight:bold;
+}
+
+/* ---------- BUTTONS ---------- */
+
+.btn-dark{
+    background:#fdacab;
+    color:#4b3a63;
+    border:none;
+    border-radius:50px;
+    padding:13px 34px;
+    transition:.3s;
+}
+
+.btn-dark:hover{
+    background:white;
+    color:#2d1f3d;
+}
+
+.btn-outline-dark{
+    border:2px solid #fdacab;
+    color:#fdacab;
+    border-radius:100px;
+    transition:.3s;
+}
+
+.btn-outline-dark:hover{
+    background:#fdacab;
+    color:#4b3a63;
+}
+
+/* ---------- LINKS ---------- */
+
+a{
+    text-decoration:none;
+}
+
+/* ---------- FOOTER ---------- */
+
+footer{
+    background:#2d1f3d;
+    color:white;
+    margin-top:60px;
+}
+
+/* ---------- SCROLLBAR ---------- */
+
+::-webkit-scrollbar{
+    width:10px;
+}
+
+::-webkit-scrollbar-track{
+    background:#2d1f3d;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#8d6592;
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#fdacab;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media(max-width:992px){
+
+    main{
+        padding:60px 0;
+    }
+
+    main h1{
+        text-align:center;
+        font-size:2.3rem;
+    }
+
+    .site-header .navbar-brand{
+        font-size:1.6rem;
+    }
+
+}
+
+@media(max-width:768px){
+
+    main{
+        padding:50px 0;
+    }
+
+    main h1{
+        font-size:2rem;
+    }
+
+    .card-body{
+        padding:22px;
+    }
+
+    .site-header .nav-link{
+        margin-left:0;
+    }
+
+    .btn-dark,
+    .btn-outline-dark{
+        padding:12px;
+    }
+
 }
