@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C'monThread | Login</title>
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body class="auth-page">
+
+    <main class="auth-wrapper">
+        <section class="auth-card">
+            <p class="auth-brand">C'monThread</p>
+            <h1>Login Account</h1>
+            <p class="auth-subtitle">Sign in to continue shopping.</p>
+
+            <form id="loginForm" class="auth-form">
+                <label for="loginEmail">Email</label>
+                <input type="email" id="loginEmail" placeholder="Enter your email" required>
+
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" placeholder="Enter your password" required>
+
+                <button type="submit" class="auth-button">Login</button>
+            </form>
+
+            <p class="auth-message" id="authMessage"></p>
+
+            <div class="auth-links">
+                <a href="login\forgot-password.html">Forgot password?</a>
+                <a href="login\create-account.html">Create an account</a>
+            </div>
+
+            <a href="index.html" class="auth-back">Back to Home</a>
+        </section>
+    </main>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>
