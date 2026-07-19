@@ -166,7 +166,7 @@ img:hover{
 }
 
 .product-card img{
-    height:340px;
+    height:290px;
     object-fit:cover;
     border-radius:0;
 }
