@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
             cart.splice(index, 1);
           }
         }
-
+        
         saveCart(cart);
         updateCartBadge();
         renderCartPage();
@@ -176,6 +176,37 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  document.querySelectorAll(".add-to-cart").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        const product = {
+
+            id: button.dataset.product.toLowerCase().replace(/\s+/g, "-"),
+
+            name: button.dataset.product,
+
+            price: Number(button.dataset.price)
+
+        };
+
+        window.Site.addToCart(product, 1, "Default");
+
+        const originalText = button.textContent;
+
+        button.textContent = "Added!";
+
+        setTimeout(() => {
+
+            button.textContent = originalText;
+
+        }, 1000);
+
+    });
+
+});
+
 });
 
 window.Site = {
