@@ -19,7 +19,7 @@ html{
 body{
     font-family:"Helvetica Neue", Arial, sans-serif;
     background:#040c30;
-    color:#f6b5b5;
+    color:#54516d;
     line-height:1.7;
 }
 
@@ -282,35 +282,56 @@ a{
     font-size:.95rem;
 }
 
-/* ---------- DETAILS SECTIONS ---------- */
+/* ---------- MATERIAL & CARE ---------- */
 
 .product-details-info{
-    background: linear-gradient(to bottom, #fdacab , #c66c92, #836193);
-    padding:85px 0;
+
+    margin-top:30px;
+
 }
 
 .info-card{
-    background:rgba(255,255,255,.1);
+
+    background:rgba(255,255,255,.08);
     border:1px solid rgba(255,255,255,.12);
     border-radius:22px;
     padding:28px;
     box-shadow:0 12px 30px rgba(0,0,0,.16);
-    height:100%;
+
 }
 
 .info-card h2{
+
     color:#fff;
     margin-bottom:16px;
     font-size:1.3rem;
+
 }
 
-.info-card p,
-.info-card li{
+.material-list{
+
+    list-style:none;
+    padding:0;
+    margin:0;
+
+}
+
+.material-list li{
+    position:relative;
+    padding-left:20px;
+    margin-bottom:12px;
     color:#fff7fb;
+
 }
 
-.info-card strong{
-    color:#fff;
+.material-list li::before{
+
+    content:"•";
+    position:absolute;
+    left:0;
+    color:#040c30;
+    font-size:1.2rem;
+
 }
 
 /* ---------- FOOTER ---------- */
@@ -361,7 +382,7 @@ footer{
     }
 
     .product-details-info{
-        padding:65px 0;
+        margin-top:25px;
     }
 
 }
@@ -401,7 +422,7 @@ footer{
     }
 
     .product-details-info{
-        padding:50px 0;
+        margin-top:20px;
     }
 
     .option-group{
