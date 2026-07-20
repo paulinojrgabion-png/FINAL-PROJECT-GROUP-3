@@ -14,6 +14,7 @@ html {
     scroll-behavior: smooth;
 }
 
+
 .auth-wrapper {
     width: 100%;
     min-height: 100vh;
@@ -33,22 +34,54 @@ html {
     backdrop-filter: blur(10px);
 }
 
-.auth-brand {
-    margin: 0 0 1rem;
-    font-size: 1.55rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    color: #040c30
+/* ---------- LOGO ---------- */
+
+.auth-logo{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin-bottom:1.5rem;
+
 }
 
-.auth-card h1 {
-    margin: 0 0 0.5rem;
-    font-size: 2rem;
-    color: #040c30
+.auth-logo img{
+
+    width:110px;
+
+    height:110px;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+
+    transition:.3s;
+
+}
+
+.auth-logo img:hover{
+
+    transform:scale(1.05);
+
+}
+
+.auth-card h1{
+
+    margin:0 0 .5rem;
+    text-align:center;
+    font-size:2rem;
+    color:#040c30;
+
 }
 
 .auth-subtitle {
     margin: 0 0 1.8rem;
+    text-align:center;
     color: #5b516e;
     line-height: 1.6;
 }
