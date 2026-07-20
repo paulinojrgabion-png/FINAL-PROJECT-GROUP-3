@@ -1,3 +1,4 @@
+// js/productlist.js
 document.addEventListener("DOMContentLoaded", () => {
   const cartCount = document.getElementById("cartCount");
   const productSearch = document.getElementById("productSearch");
@@ -29,49 +30,29 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function applyFilters() {
-    const searchText = productSearch.value.toLowerCase().trim();
+    const searchText = productSearch ? productSearch.value.toLowerCase().trim() : "";
     const activeFilter = document.querySelector(".filter-btn.active")?.dataset.filter || "all";
 
     productItems.forEach(item => {
-      const name = item.dataset.name || "";
-      const category = item.dataset.category || "";
+      const name = (item.dataset.name || "").toLowerCase();
+      const category = (item.dataset.category || "").toLowerCase();
 
-      const matchesSearch =
-        name.includes(searchText) ||
-        category.includes(searchText);
-
-      const matchesFilter =
-        activeFilter === "all" || category === activeFilter;
+      const matchesSearch = name.includes(searchText) || category.includes(searchText);
+      const matchesFilter = activeFilter === "all" || category === activeFilter;
 
       item.style.display = matchesSearch && matchesFilter ? "" : "none";
     });
   }
 
-  if (productSearch) {
-    productSearch.addEventListener("input", applyFilters);
-  }
-
-  filterButtons.forEach(button => {
-    button.addEventListener("click", () => {
-      filterButtons.forEach(btn => btn.classList.remove("active"));
-      button.classList.add("active");
-      applyFilters();
-    });
-  });
-
-  document.addEventListener("click", (event) => {
-    const button = event.target.closest(".add-to-cart-btn");
-    if (!button) return;
-
-    const card = button.closest(".product-item");
-    if (!card) return;
-
+  function addProductToCart(card) {
     const product = {
       id: card.dataset.productId,
       name: card.dataset.productName,
       price: Number(card.dataset.productPrice),
       image: card.dataset.productImage
     };
+
+    if (!product.id || !product.name || !product.price) return;
 
     if (window.Site && typeof window.Site.addToCart === "function") {
       window.Site.addToCart(product, 1, "Default");
@@ -96,6 +77,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     updateCartBadge();
+  }
+
+  if (productSearch) {
+    productSearch.addEventListener("input", applyFilters);
+  }
+
+  filterButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      filterButtons.forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
+      applyFilters();
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest(".add-to-cart-btn");
+    if (!button) return;
+
+    const card = button.closest(".product-item");
+    if (!card) return;
+
+    addProductToCart(card);
 
     const originalText = button.textContent;
     button.textContent = "Added!";
